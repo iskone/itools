@@ -1,3 +1,3 @@
-module github.com/iskone/gotools
+module github.com/iskone/itools
 
 go 1.14
