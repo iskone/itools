@@ -49,12 +49,15 @@ func AutoSetLength(v interface{}, tag string) interface{} {
 	}
 	vtype := value.Elem().Type()
 	for i := 0; i < vtype.NumField(); i++ {
-		value.Elem().Field(i).Set(reflect.ValueOf(AutoSetLength(value.Elem().Field(i).Interface(), tag)))
 		structInfo := value.Elem().Type().Field(i)
+		if structInfo.Anonymous {
+			continue
+		}
+		value.Elem().Field(i).Set(reflect.ValueOf(AutoSetLength(value.Elem().Field(i).Interface(), tag)))
+
 		if s := structInfo.Tag.Get("autoLen"); s != "" {
 			var slen = 0
 			var b bool
-
 			if f, ok := vtype.FieldByName(s); ok {
 				m := value.Elem().FieldByIndex(f.Index)
 				if slen, b = autoSetLengthGetLen(m); !b {
