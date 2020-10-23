@@ -15,6 +15,7 @@ func EncodeXml(i interface{}) (*bytes.Buffer, error) {
 		return nil, e
 	}
 	return buf, nil
+
 }
 func EncodeXmlToString(i interface{}) (string, error) {
 	buf, e := EncodeXml(i)
@@ -25,5 +26,10 @@ func EncodeXmlToString(i interface{}) (string, error) {
 }
 func DecodeXml(r io.Reader, v interface{}) error {
 	dec := xml.NewDecoder(r)
+	return dec.Decode(v)
+}
+func DecodeXmlCustom(r io.Reader, v interface{}, f func(d *xml.Decoder)) error {
+	dec := xml.NewDecoder(r)
+	f(dec)
 	return dec.Decode(v)
 }
