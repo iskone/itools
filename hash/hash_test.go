@@ -5,7 +5,7 @@ import (
 )
 
 func TestHash_Diff(t *testing.T) {
-	h1:=NewHash()
+	var h1 Hash
 	h1.Set("1","1")
 	h1.Set("2","2")
 	h1.Set("3","3")
